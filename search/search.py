@@ -98,6 +98,8 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
         visited.add(next_state)
     
     # Initialise the frontier with the start state and an empty action list
+    
+    frontier = util.Stack()
     frontier.push((problem.getStartState(), []))
     
     while not frontier.isEmpty():
@@ -111,7 +113,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     return []
     
     '''#def dfs_numpy(graph, source, target):
-    nodes = list(graph.nodes())
+    nodes = list(graph.nodes()) 
     adjacency_matrix = nx.to_numpy_array(graph, nodelist=nodes)
 
     visited = np.zeros(len(nodes), dtype=bool)
