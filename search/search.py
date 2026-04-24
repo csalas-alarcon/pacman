@@ -90,26 +90,44 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """
     "*** YOUR CODE HERE ***"
     
-    visited = set
-    visited.add(problem.getStartState())
+    from util import Stack
     
-    # to check whether a state has been visited:
-    if next_state not in visited:
-        visited.add(next_state)
-    
+    # Inicializamos Set de Visitados
+    visited = set()
+    # Conseguimos Origen
+    startState = problem.getStartState()
+    # Añadimos Origen a Visitados
+    visited.add(startState)
+
     # Initialise the frontier with the start state and an empty action list
+    # Declaramos la Frontera
+    # STACK -> LIFO (DFS)
+    # Ejemplo .getSuccesors() -> ((5, 4), 'South', 1)
     
+    # Creamos la Cola de Exploración
     frontier = util.Stack()
-    frontier.push((problem.getStartState(), []))
+    # Añadimos a la cola el Origen
+    frontier.push((startState, [], 1))
     
+    # Mientras haya Cola de Exploración
     while not frontier.isEmpty():
-        state, actions = frontier.pop()
-        for next_state, action, cost in problem.getSuccessors(state):
+        # Sacamos para usar una casilla de la Cola de Exploración
+        state, actions = frontier.pop() # Porque no pide cost?
+        # Conseguimos sus sucesores
+        successors = problem.getSuccessors(state)
+        # Por cada Sucesor
+        for next_state, action, _ in successors:
+            # Si no está visitado
             if next_state not in visited:
+                # Añadimos a la cola de Exploración
+                # y Stackeamos las Acciones hasta llegar ahí
                 frontier.push((next_state, actions + [action]))
+            # Si es el objetivo
             if problem.isGoalState(state):
+                # Ganamos
                 return actions
-    
+            # Sino es, repetimos el bucle
+    # En caso de error -> Lista Vacia
     return []
     
     '''#def dfs_numpy(graph, source, target):
@@ -160,7 +178,49 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    from util import Queue
+    
+    # BFS -> FIFO -> util.queue
+        # Inicializamos Set de Visitados
+    visited = set()
+    # Conseguimos Origen
+    startState = problem.getStartState()
+    # Añadimos Origen a Visitados
+    visited.add(startState)
+
+    # Initialise the frontier with the start state and an empty action list
+    # Declaramos la Frontera
+    # STACK -> LIFO (DFS)
+    # Ejemplo .getSuccesors() -> ((5, 4), 'South', 1)
+    
+    # Creamos la Cola de Exploración
+    frontier = util.Queue()
+    # Añadimos a la cola el Origen
+    frontier.push((startState, []))
+    
+    # Mientras haya Cola de Exploración
+    while not frontier.isEmpty():
+        # Sacamos para usar una casilla de la Cola de Exploración
+        state, actions = frontier.pop() # porque no pide costs?
+        # Si es el objetivo
+        if problem.isGoalState(state):
+            # Ganamos
+            return actions
+        # Conseguimos sus sucesores
+        successors = problem.getSuccessors(state)
+        # Por cada Sucesor
+        for next_state, action, _ in successors:
+            # Si no está visitado
+            if next_state not in visited:
+                # Añadimos a la Lista de Visitados
+                visited.add(state)
+                # Añadimos a la cola de Exploración
+                # y Stackeamos las Acciones hasta llegar ahí
+                frontier.push((next_state, actions + [action]))
+            
+    # En caso de error -> Lista Vacia
+    return []
 
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     """Search the node of least total cost first."""
