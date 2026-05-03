@@ -1,4 +1,5 @@
 # search.py
+# Carlos Salas Alarcón
 # ---------
 # Licensing Information:  You are free to use or extend these projects for
 # educational purposes provided that (1) you do not distribute or publish
@@ -84,14 +85,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
-    
-    # Initialise the frontier with the start state and an empty action list
-    # Declaramos la Frontera
-    # STACK -> LIFO (DFS)
-    # Ejemplo .getSuccesors() -> ((5, 4), 'South', 1)
     """
-    "*** YOUR CODE HERE ***"
-    
     from util import Stack
     
     # Inicializamos Set de Visitados
@@ -112,6 +106,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
         if problem.isGoalState(state):
             return actions
 
+        # Añadimos a Visitados
         if state not in visited:
             visited.add(state)
         
@@ -130,9 +125,7 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     #util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
-    """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    
+    """Search the shallowest nodes in the search tree first."""    
     from util import Queue
         
     # Inicializamos Set de Visitados
@@ -152,6 +145,7 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
         if problem.isGoalState(state):
             return actions
 
+        # Añadimos a Visitados
         if state not in visited:
             visited.add(state)
         
@@ -168,7 +162,6 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
 
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
     from util import PriorityQueue
     
     # Inicializamos Set de Visitados
@@ -177,8 +170,8 @@ def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     # Creamos la Cola de Prioridad
     frontier = PriorityQueue()
     
-    # Añadimos el Origen. En UCS guardamos (estado, acciones, coste_acumulado)
-    # PriorityQueue.push() pide el elemento y su valor de prioridad (que es el coste)
+    #  En UCS guardamos (estado, acciones, coste_acumulado)
+    # PriorityQueue.push() pide el elemento y el coste
     frontier.push((problem.getStartState(), [], 0), 0)
     
     while not frontier.isEmpty():
@@ -188,7 +181,7 @@ def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
         if problem.isGoalState(state):
             return actions
 
-        # IMPORTANTE: En UCS marcamos como visitado al hacer el pop
+        # Se añade a visitado después del POp
         if state not in visited:
             visited.add(state)
         
@@ -210,8 +203,6 @@ def nullHeuristic(state, problem=None) -> float:
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directions]:
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-
     from util import PriorityQueue
     
     frontier = PriorityQueue()
@@ -224,9 +215,7 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directi
     while not frontier.isEmpty():
         state, actions, cost = frontier.pop()
         
-        # La pequeña modificación para vencer la trampa del test:
-        # En vez de rechazar el nodo solo por estar en 'visited', 
-        # lo rechazamos SOLO si ya habíamos llegado a él por un camino igual o MÁS BARATO.
+        # No lo exploramos si ya hemos llegado a el por un camino más barato
         if state in visited and visited[state] <= cost:
             continue
             
@@ -236,7 +225,7 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directi
             return actions
             
         for next_state, action, step_cost in problem.getSuccessors(state):
-            # ¡EXACTAMENTE las líneas de tu enunciado!
+            # Añadimos la heurística al coste
             f = cost + step_cost + heuristic(next_state, problem)
             frontier.push(
                 (next_state, actions + [action], cost + step_cost),

@@ -1,0 +1,26 @@
+{
+    "DFS": {
+      "Algorithm": "DFS",
+      "Maze": "customMaze",
+      "Nodes expanded": 30,
+      "Path length": 30
+    }    ,
+    "BFS": {
+      "Algorithm": "BFS",
+      "Maze": "customMaze",
+      "Nodes expanded": 119,
+      "Path length": 30
+    }    ,
+    "UCS": {
+      "Algorithm": "UCS",
+      "Maze": "customMaze",
+      "Nodes expanded": 119,
+      "Path length": 30
+    }    ,
+    "A*": {
+      "Algorithm": "A*",
+      "Maze": "customMaze",
+      "Nodes expanded": 80,
+      "Path length": 30
+    }
+}

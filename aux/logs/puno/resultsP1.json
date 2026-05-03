@@ -1,0 +1,34 @@
+{
+  "DFS": {
+    "tinyMaze": {
+      "Nodes expanded": 15,
+      "Path length": 10
+    }
+    ,
+    "mediumMaze": {
+      "Nodes expanded": 146,
+      "Path length": 130
+    }
+    ,
+    "bigMaze": {
+      "Nodes expanded": 390,
+      "Path length": 210
+    }
+  },
+  "BFS": {
+    "tinyMaze": {
+      "Nodes expanded": 15,
+      "Path length": 8
+    }
+    ,
+    "mediumMaze": {
+      "Nodes expanded": 269,
+      "Path length": 68
+    }
+    ,
+    "bigMaze": {
+      "Nodes expanded": 620,
+      "Path length": 210
+    }
+  }
+}

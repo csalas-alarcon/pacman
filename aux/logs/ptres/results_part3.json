@@ -1,0 +1,74 @@
+{
+    "mazeA_DFS": {
+      "Algorithm": "DFS",
+      "Maze": "mazeA",
+      "Nodes expanded": 20,
+      "Path length": 20
+    }    ,
+    "mazeA_BFS": {
+      "Algorithm": "BFS",
+      "Maze": "mazeA",
+      "Nodes expanded": 20,
+      "Path length": 20
+    }    ,
+    "mazeA_UCS": {
+      "Algorithm": "UCS",
+      "Maze": "mazeA",
+      "Nodes expanded": 20,
+      "Path length": 20
+    }    ,
+    "mazeA_A*": {
+      "Algorithm": "A*",
+      "Maze": "mazeA",
+      "Nodes expanded": 20,
+      "Path length": 20
+    }    ,
+    "mazeB_DFS": {
+      "Algorithm": "DFS",
+      "Maze": "mazeB",
+      "Nodes expanded": 90,
+      "Path length": 90
+    }    ,
+    "mazeB_BFS": {
+      "Algorithm": "BFS",
+      "Maze": "mazeB",
+      "Nodes expanded": 107,
+      "Path length": 22
+    }    ,
+    "mazeB_UCS": {
+      "Algorithm": "UCS",
+      "Maze": "mazeB",
+      "Nodes expanded": 107,
+      "Path length": 22
+    }    ,
+    "mazeB_A*": {
+      "Algorithm": "A*",
+      "Maze": "mazeB",
+      "Nodes expanded": 107,
+      "Path length": 22
+    }    ,
+    "mazeC_DFS": {
+      "Algorithm": "DFS",
+      "Maze": "mazeC",
+      "Nodes expanded": 35,
+      "Path length": 35
+    }    ,
+    "mazeC_BFS": {
+      "Algorithm": "BFS",
+      "Maze": "mazeC",
+      "Nodes expanded": 92,
+      "Path length": 15
+    }    ,
+    "mazeC_UCS": {
+      "Algorithm": "UCS",
+      "Maze": "mazeC",
+      "Nodes expanded": 92,
+      "Path length": 15
+    }    ,
+    "mazeC_A*": {
+      "Algorithm": "A*",
+      "Maze": "mazeC",
+      "Nodes expanded": 62,
+      "Path length": 15
+    }
+}
