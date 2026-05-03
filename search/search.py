@@ -62,9 +62,6 @@ class SearchProblem:
         """
         util.raiseNotDefined()
 
-
-
-
 def tinyMazeSearch(problem: SearchProblem) -> List[Directions]:
     """
     Returns a sequence of moves that solves tinyMaze.  For any other maze, the
@@ -87,6 +84,11 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    
+    # Initialise the frontier with the start state and an empty action list
+    # Declaramos la Frontera
+    # STACK -> LIFO (DFS)
+    # Ejemplo .getSuccesors() -> ((5, 4), 'South', 1)
     """
     "*** YOUR CODE HERE ***"
     
@@ -94,130 +96,72 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     
     # Inicializamos Set de Visitados
     visited = set()
-    # Conseguimos Origen
-    startState = problem.getStartState()
-    # Añadimos Origen a Visitados
-    visited.add(startState)
 
-    # Initialise the frontier with the start state and an empty action list
-    # Declaramos la Frontera
-    # STACK -> LIFO (DFS)
-    # Ejemplo .getSuccesors() -> ((5, 4), 'South', 1)
     
     # Creamos la Cola de Exploración
     frontier = util.Stack()
     # Añadimos a la cola el Origen
-    frontier.push((startState, [], 1))
+    frontier.push((problem.getStartState(), []))
     
     # Mientras haya Cola de Exploración
     while not frontier.isEmpty():
         # Sacamos para usar una casilla de la Cola de Exploración
         state, actions = frontier.pop() # Porque no pide cost?
-        # Conseguimos sus sucesores
-        successors = problem.getSuccessors(state)
-        # Por cada Sucesor
-        for next_state, action, _ in successors:
-            # Si no está visitado
-            if next_state not in visited:
-                # Añadimos a la cola de Exploración
-                # y Stackeamos las Acciones hasta llegar ahí
-                frontier.push((next_state, actions + [action]))
-            # Si es el objetivo
-            if problem.isGoalState(state):
-                # Ganamos
-                return actions
-            # Sino es, repetimos el bucle
+
+        # Si es el objetivo
+        if problem.isGoalState(state):
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+        
+            # Por cada Sucesor
+            for next_state, action, _ in problem.getSuccessors(state):
+                # Si no está visitado
+                if next_state not in visited:
+                    # Añadimos a la cola de Exploración
+                    # y Stackeamos las Acciones hasta llegar ahí
+                    frontier.push((next_state, actions + [action]))
+
+
     # En caso de error -> Lista Vacia
     return []
     
-    '''#def dfs_numpy(graph, source, target):
-    nodes = list(graph.nodes()) 
-    adjacency_matrix = nx.to_numpy_array(graph, nodelist=nodes)
-
-    visited = np.zeros(len(nodes), dtype=bool)
-    source_index = nodes.index(source)
-    target_index = nodes.index(target)
-    visited[source_index] = True
-
-    to_explore = [source_index]
-    current_position = len(to_explore) - 1  # DFS: always the last element
-
-    parent = np.ones(len(nodes), dtype=int) * -1
-    steps = 0
-
-    while len(to_explore) > 0:
-        steps += 1
-        current_index = to_explore[current_position]
-        to_explore.pop(current_position)
-
-        if current_index == target_index:
-            break
-
-        neighbors = np.where(adjacency_matrix[current_index] == 1)[0]
-        for neighbor_index in neighbors:
-            if not visited[neighbor_index]:
-                visited[neighbor_index] = True
-                to_explore.append(neighbor_index)
-                current_position = len(to_explore) - 1
-                parent[neighbor_index] = current_index
-
-        if len(to_explore) > 0:
-            current_position = len(to_explore) - 1
-
-    path = []
-    if parent[target_index] != -1 or source_index == target_index:
-        current = target_index
-        while current != -1:
-            path.insert(0, nodes[current])
-            current = parent[current]
-
-    return steps, path'''
-    
-    util.raiseNotDefined()
+    #util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
     
     from util import Queue
-    
-    # BFS -> FIFO -> util.queue
-        # Inicializamos Set de Visitados
+        
+    # Inicializamos Set de Visitados
     visited = set()
-    # Conseguimos Origen
-    startState = problem.getStartState()
-    # Añadimos Origen a Visitados
-    visited.add(startState)
-
-    # Initialise the frontier with the start state and an empty action list
-    # Declaramos la Frontera
-    # STACK -> LIFO (DFS)
-    # Ejemplo .getSuccesors() -> ((5, 4), 'South', 1)
     
     # Creamos la Cola de Exploración
     frontier = util.Queue()
     # Añadimos a la cola el Origen
-    frontier.push((startState, []))
+    frontier.push((problem.getStartState(), []))
     
     # Mientras haya Cola de Exploración
     while not frontier.isEmpty():
         # Sacamos para usar una casilla de la Cola de Exploración
-        state, actions = frontier.pop() # porque no pide costs?
+        state, actions = frontier.pop() # Porque no pide cost?
+
         # Si es el objetivo
         if problem.isGoalState(state):
-            # Ganamos
             return actions
-        # Conseguimos sus sucesores
-        successors = problem.getSuccessors(state)
-        # Por cada Sucesor
-        for next_state, action, _ in successors:
-            # Si no está visitado
-            if next_state not in visited:
-                # Añadimos a la Lista de Visitados
-                visited.add(state)
-                # Añadimos a la cola de Exploración
-                # y Stackeamos las Acciones hasta llegar ahí
-                frontier.push((next_state, actions + [action]))
+
+        if state not in visited:
+            visited.add(state)
+        
+            # Por cada Sucesor
+            for next_state, action, _ in problem.getSuccessors(state):
+                # Si no está visitado
+                if next_state not in visited:
+                    # Añadimos a la cola de Exploración
+                    # y Stackeamos las Acciones hasta llegar ahí
+                    frontier.push((next_state, actions + [action]))
             
     # En caso de error -> Lista Vacia
     return []
@@ -225,7 +169,37 @@ def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import PriorityQueue
+    
+    # Inicializamos Set de Visitados
+    visited = set()
+    
+    # Creamos la Cola de Prioridad
+    frontier = PriorityQueue()
+    
+    # Añadimos el Origen. En UCS guardamos (estado, acciones, coste_acumulado)
+    # PriorityQueue.push() pide el elemento y su valor de prioridad (que es el coste)
+    frontier.push((problem.getStartState(), [], 0), 0)
+    
+    while not frontier.isEmpty():
+        # Ahora el pop nos devuelve 3 elementos
+        state, actions, cost = frontier.pop()
+
+        if problem.isGoalState(state):
+            return actions
+
+        # IMPORTANTE: En UCS marcamos como visitado al hacer el pop
+        if state not in visited:
+            visited.add(state)
+        
+            for next_state, action, step_cost in problem.getSuccessors(state):
+                if next_state not in visited:
+                    # Calculamos el nuevo coste total para llegar a este vecino
+                    new_cost = cost + step_cost
+                    # Lo añadimos a la frontera con su nueva prioridad
+                    frontier.push((next_state, actions + [action], new_cost), new_cost)
+            
+    return []
 
 def nullHeuristic(state, problem=None) -> float:
     """
@@ -237,7 +211,39 @@ def nullHeuristic(state, problem=None) -> float:
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directions]:
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    from util import PriorityQueue
+    
+    frontier = PriorityQueue()
+    # Usamos un diccionario para registrar el coste al que llegamos a cada estado
+    visited = {} 
+    
+    start_state = problem.getStartState()
+    frontier.push((start_state, [], 0), 0)
+    
+    while not frontier.isEmpty():
+        state, actions, cost = frontier.pop()
+        
+        # La pequeña modificación para vencer la trampa del test:
+        # En vez de rechazar el nodo solo por estar en 'visited', 
+        # lo rechazamos SOLO si ya habíamos llegado a él por un camino igual o MÁS BARATO.
+        if state in visited and visited[state] <= cost:
+            continue
+            
+        visited[state] = cost
+        
+        if problem.isGoalState(state):
+            return actions
+            
+        for next_state, action, step_cost in problem.getSuccessors(state):
+            # ¡EXACTAMENTE las líneas de tu enunciado!
+            f = cost + step_cost + heuristic(next_state, problem)
+            frontier.push(
+                (next_state, actions + [action], cost + step_cost),
+                f
+            )
+            
+    return []
 
 # Abbreviations
 bfs = breadthFirstSearch
